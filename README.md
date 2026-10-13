@@ -1,5 +1,9 @@
 # GeoParquet Patterns
 
+## Who this is for
+
+Data engineers, data scientists, and analytics engineers who work with large-scale geospatial data in columnar formats.
+
 A practical guide and reference implementation for working with [GeoParquet](https://geoparquet.org/) — an open, columnar format for geospatial data built on Apache Parquet.
 
 Built for **data engineers** and **data scientists** who need fast, interoperable geospatial analytics at scale.
