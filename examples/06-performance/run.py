@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 """Example 06: GeoParquet performance benchmarks."""
+
 import os
 import time
 
@@ -12,10 +13,9 @@ n = 10000
 points = gpd.GeoDataFrame(
     {"category": np.random.choice(["A", "B", "C"], n), "value": np.random.randint(1, 100, n)},
     geometry=gpd.points_from_xy(
-        np.random.uniform(-80.95, -80.90, n),
-        np.random.uniform(28.95, 29.05, n)
+        np.random.uniform(-80.95, -80.90, n), np.random.uniform(28.95, 29.05, n)
     ),
-    crs="EPSG:4326"
+    crs="EPSG:4326",
 )
 
 # Write GeoParquet
@@ -44,5 +44,5 @@ loaded_json = gpd.read_file("output/benchmark.geojson")
 json_time = time.time() - start
 json_size = os.path.getsize("output/benchmark.geojson") / 1024 / 1024
 print(f"\nGeoJSON: {json_time:.3f}s ({json_size:.2f} MB)")
-print(f"\nGeoParquet is {json_time/read_time:.1f}x faster to read")
-print(f"GeoParquet is {json_size/write_size:.1f}x smaller")
+print(f"\nGeoParquet is {json_time / read_time:.1f}x faster to read")
+print(f"GeoParquet is {json_size / write_size:.1f}x smaller")

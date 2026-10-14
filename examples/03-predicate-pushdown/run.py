@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 """Example 03: Predicate pushdown with DuckDB."""
+
 import duckdb
 
 con = duckdb.connect()

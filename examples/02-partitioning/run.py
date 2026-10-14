@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 """Example 02: Partitioning strategies for GeoParquet."""
+
 import os
 
 import geopandas as gpd
@@ -16,7 +17,7 @@ values = np.random.randint(1, 100, n)
 points = gpd.GeoDataFrame(
     {"category": categories, "value": values},
     geometry=gpd.points_from_xy(lngs, lats),
-    crs="EPSG:4326"
+    crs="EPSG:4326",
 )
 
 # Write partitioned by category

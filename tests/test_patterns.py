@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 """Tests for geoparquet-patterns."""
+
 import subprocess
 import sys
 from pathlib import Path
@@ -11,8 +12,7 @@ def test_python_syntax():
     """All Python examples have valid syntax."""
     for py_file in sorted(EXAMPLES_DIR.glob("*/run.py")):
         result = subprocess.run(
-            [sys.executable, "-m", "py_compile", str(py_file)],
-            capture_output=True
+            [sys.executable, "-m", "py_compile", str(py_file)], capture_output=True
         )
         assert result.returncode == 0, f"Syntax error in {py_file}"
 

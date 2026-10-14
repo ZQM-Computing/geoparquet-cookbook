@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 """Example 01: Create GeoParquet files."""
+
 import geopandas as gpd
 import pyarrow.parquet as pq
 from shapely.geometry import Point
@@ -7,9 +8,14 @@ from shapely.geometry import Point
 # Create synthetic data
 points = gpd.GeoDataFrame(
     {"name": ["A", "B", "C", "D", "E"], "value": [10, 20, 30, 40, 50]},
-    geometry=[Point(-80.93, 29.02), Point(-80.92, 29.03), Point(-80.91, 29.01),
-              Point(-80.90, 29.00), Point(-80.89, 28.99)],
-    crs="EPSG:4326"
+    geometry=[
+        Point(-80.93, 29.02),
+        Point(-80.92, 29.03),
+        Point(-80.91, 29.01),
+        Point(-80.90, 29.00),
+        Point(-80.89, 28.99),
+    ],
+    crs="EPSG:4326",
 )
 
 # Write to GeoParquet

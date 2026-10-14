@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 """Example 04: DuckDB integration with GeoParquet."""
+
 import duckdb
 
 con = duckdb.connect()
