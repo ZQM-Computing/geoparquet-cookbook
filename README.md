@@ -59,6 +59,7 @@ print(df.collect_schema())
 
 # Query with DuckDB
 import duckdb
+
 duckdb.sql("""
     SELECT * FROM 'data/buildings.parquet'
     WHERE ST_Intersects(geom, ST_MakeEnvelope(-122.5, 37.7, -122.4, 37.8))
