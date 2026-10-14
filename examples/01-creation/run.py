@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """Example 01: Create GeoParquet files."""
 import geopandas as gpd
+import pyarrow.parquet as pq
 from shapely.geometry import Point
-import pandas as pd
 
 # Create synthetic data
 points = gpd.GeoDataFrame(
@@ -23,7 +23,7 @@ print(loaded)
 print()
 
 # Check metadata
-import pyarrow.parquet as pq
+
 table = pq.read_table("output/points.parquet")
 print(f"Schema: {table.schema}")
 print(f"Rows: {table.num_rows}")

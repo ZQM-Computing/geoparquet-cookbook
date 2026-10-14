@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """Example 02: Partitioning strategies for GeoParquet."""
+import os
+
 import geopandas as gpd
-from shapely.geometry import Point
-import pandas as pd
 import numpy as np
 
 # Create synthetic data with categories
@@ -24,7 +24,7 @@ points.to_parquet("output/partitioned.parquet", partition_cols=["category"], ind
 print("Written partitioned parquet")
 
 # List partitions
-import os
+
 for root, dirs, files in os.walk("output/partitioned.parquet"):
     for d in dirs:
         print(f"  Partition: {d}")

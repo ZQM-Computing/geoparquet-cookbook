@@ -1,11 +1,10 @@
 #!/usr/bin/env python3
 """Example 06: GeoParquet performance benchmarks."""
-import geopandas as gpd
-from shapely.geometry import Point
-import pandas as pd
-import numpy as np
-import time
 import os
+import time
+
+import geopandas as gpd
+import numpy as np
 
 # Create synthetic data
 np.random.seed(42)
