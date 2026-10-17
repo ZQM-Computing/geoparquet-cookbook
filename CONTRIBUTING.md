@@ -1,58 +1,34 @@
-# Contributing to GeoParquet Patterns
+# Contributing to ZQM Computing
 
-Thanks for your interest in improving this project!
+Thank you for your interest in contributing to ZQM Computing — geospatial patterns and tools.
 
-## Development Setup
+## How to Contribute
 
-```bash
-git clone https://github.com/zqmcomputing/geoparquet-patterns.git
-cd geoparquet-patterns
-python -m venv .venv
-source .venv/bin/activate  # Windows: .venv\Scripts\activate
-pip install -e ".[dev]"
-```
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/your-feature`)
+3. Commit your changes (`git commit -m 'Add your feature'`)
+4. Push to the branch (`git push origin feature/your-feature`)
+5. Open a Pull Request
 
-## Running Tests
+## Code Standards
 
-```bash
-pytest tests/ -v
-# or
-python -m pytest tests/ -v
-```
-
-## Code Style
-
-- Follow PEP 8
-- Use type hints where practical
-- Maximum line length: 100 characters
-
-## Adding a New Example
-
-1. Create a new directory under `examples/` following the naming convention `NN-topic-name/`
-2. Include a `README.md` explaining the pattern and when to use it
-3. Add a runnable Python script with sample data generation
-4. Add corresponding tests in `tests/`
-
-## Pull Request Process
-
-1. Fork the repository and create a feature branch
-2. Make your changes with clear commit messages
-3. Ensure all tests pass (`pytest tests/ -v`)
-4. Update documentation if needed
-5. Submit a PR with a clear description of the change
+- Follow existing code style
+- Add tests for new features
+- Update documentation as needed
+- Keep commits atomic and descriptive
+- All repos are MIT-licensed unless otherwise noted
 
 ## Reporting Issues
 
-Please include:
-- Python version and OS
-- Full error traceback
-- A minimal reproduction script
-- Expected vs. actual behavior
+- Use GitHub Issues for bug reports
+- Include steps to reproduce
+- Specify your environment (OS, version, etc)
+- For security vulnerabilities, see [SECURITY.md](SECURITY.md)
 
-## Code of Conduct
+## Questions?
 
-Be respectful and constructive. Harassment or discrimination will not be tolerated.
+Open an issue or discussion in the repository.
 
-## License
+---
 
-By contributing, you agree that your contributions will be licensed under the MIT License.
+*Part of the [ZQM Computing](https://github.com/ZQM-Computing) ecosystem — geospatial patterns and tools.*
