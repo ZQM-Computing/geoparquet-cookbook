@@ -21,7 +21,7 @@ jobs:
       - run: pip install mkdocs-material || true
       - run: mkdocs build 2>/dev/null || true
       - run: mkdir -p site && cp -R docs/* site/ 2>/dev/null || true
-      - uses: actions/upload-pages-artifact@v5
+      - uses: actions/upload-pages-artifact@v4
         with:
           path: site
   deploy:
@@ -29,4 +29,4 @@ jobs:
     runs-on: ubuntu-latest
     needs: build
     steps:
-      - uses: actions/deploy-pages@v5
+      - uses: actions/deploy-pages@v4
