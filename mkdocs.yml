@@ -1,0 +1,22 @@
+site_name: geoparquet-patterns
+site_description: GeoParquet patterns ΓÇö partitioning, predicate pushdown, DuckDB/Spark integration, benchmarks
+site_author: ZQM Computing
+repo_url: https://github.com/ZQM-Computing/geoparquet-patterns
+
+theme:
+  name: material
+  features:
+    - navigation.tabs
+    - navigation.sections
+    - search.suggest
+    - search.highlight
+
+markdown_extensions:
+  - admonition
+  - codehilite
+  - toc:
+      permalink: true
+
+nav:
+  - Home: index.md
+
