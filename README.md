@@ -1,11 +1,13 @@
 # GeoParquet Patterns
 
 <!-- ZQM-START -->
+<!-- markdownlint-disable MD033 -->
 <p align="center">
   <strong>ZQM Computing — Geospatial Engineering & Scientific Computing</strong><br>
   <a href="https://github.com/ZQM-Computing">ZQM Computing</a> •
   <a href="https://github.com/ZQM-Labs">ZQM Labs</a>
 </p>
+<!-- markdownlint-enable MD033 -->
 <!-- ZQM-END -->
 
 ## Who this is for
@@ -26,7 +28,7 @@ Built for **data engineers** and **data scientists** who need fast, interoperabl
 
 ## Repository Structure
 
-```
+```text
 geoparquet-patterns/
 ├── examples/
 │   ├── 01-cog-creation/          # Create Cloud-Optimized GeoTIFFs + GeoParquet
@@ -138,6 +140,7 @@ See [CONTRIBUTING.md](CONTRIBUTING.md).
 *Part of [ZQM Computing](https://github.com/ZQM-Computing) — geospatial engineering, scientific computing, and infrastructure patterns.*
 
 <!-- ZQM-FOOTER-START -->
+<!-- markdownlint-disable MD033 -->
 ---
 
 <p align="center">
@@ -146,4 +149,5 @@ See [CONTRIBUTING.md](CONTRIBUTING.md).
   <a href="https://github.com/ZQM-Labs">ZQM Labs</a> •
   <a href="https://github.com/ZQM-Computing">ZQM Computing</a>
 </p>
+<!-- markdownlint-enable MD033 -->
 <!-- ZQM-FOOTER-END -->
