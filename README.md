@@ -76,6 +76,13 @@ duckdb.sql("""
 """).show()
 ```
 
+## Usage
+
+After [Installation](#installation), work through the
+[Quick Start](#quick-start) and the [Examples](#examples): each example
+reads or writes real GeoParquet files, so you can lift the code straight
+into your own pipeline and point it at your data.
+
 ## Examples
 
 | # | Topic | Engine | Key Concepts |
