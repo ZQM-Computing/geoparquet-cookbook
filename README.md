@@ -127,16 +127,6 @@ MIT — see [LICENSE](LICENSE).
 
 See [CONTRIBUTING.md](CONTRIBUTING.md).
 
-## Related repositories
-
-- [ZQM Geospatial Patterns](https://github.com/ZQM-Computing/geospatial-patterns) — umbrella index of all geospatial pattern repos
-- [postgis-patterns](https://github.com/ZQM-Computing/postgis-patterns) — production PostGIS patterns & best practices
-- [duckdb-spatial-patterns](https://github.com/ZQM-Computing/duckdb-spatial-patterns) — DuckDB Spatial patterns for analytical geospatial SQL
-- [geospatial-api-reference](https://github.com/ZQM-Computing/geospatial-api-reference) — OGC API - Features with FastAPI + PostGIS
-- [qgis-resources](https://github.com/ZQM-Computing/qgis-resources) — QGIS expressions, PyQGIS, styles, and QField guides
-- [proxmox-ceph-operations](https://github.com/ZQM-Computing/proxmox-ceph-operations) — Proxmox VE + Ceph operations runbooks
-- [ollama-fleet-patterns](https://github.com/ZQM-Computing/ollama-fleet-patterns) — Ollama fleet operations & a minimal RAG reference
-
 *Part of [ZQM Computing](https://github.com/ZQM-Computing) — geospatial engineering, scientific computing, and infrastructure patterns.*
 
 <!-- ZQM-FOOTER-START -->
@@ -144,8 +134,7 @@ See [CONTRIBUTING.md](CONTRIBUTING.md).
 ---
 
 <p align="center">
-  <em>Play more. Plan less.</em><br>
-  <a href="https://zqmlabs.com">zqmlabs.com</a> •
+  <em>Geospatial engineering · Scientific computing · Reproducible patterns</em><br>
   <a href="https://github.com/ZQM-Labs">ZQM Labs</a> •
   <a href="https://github.com/ZQM-Computing">ZQM Computing</a>
 </p>
