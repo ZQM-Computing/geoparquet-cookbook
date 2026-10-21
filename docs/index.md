@@ -121,7 +121,7 @@ The configured CI workflow is the source of truth for automated checks. A passin
 
 ## License
 
-MIT — see [LICENSE](../LICENSE).
+MIT — see [LICENSE](https://github.com/ZQM-Computing/geoparquet-patterns/blob/main/LICENSE).
 
 ## Contributing
 
