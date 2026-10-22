@@ -1,4 +1,4 @@
-site_name: geoparquet-patterns
+site_name: GeoParquet Patterns
 site_url: https://geoparquet.zqmlabs.com/
 site_description: GeoParquet patterns — partitioning, predicate pushdown, DuckDB/Spark integration, benchmarks
 site_author: ZQM Computing
@@ -6,6 +6,7 @@ repo_url: https://github.com/ZQM-Computing/geoparquet-patterns
 
 theme:
   name: material
+  custom_dir: docs/overrides
   features:
     - navigation.tabs
     - navigation.sections
