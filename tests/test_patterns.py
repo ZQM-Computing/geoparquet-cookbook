@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Tests for geoparquet-patterns."""
+"""Tests for geoparquet-cookbook."""
 
 import subprocess
 import sys

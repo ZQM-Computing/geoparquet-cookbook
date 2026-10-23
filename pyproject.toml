@@ -3,7 +3,7 @@ requires = ["hatchling"]
 build-backend = "hatchling.build"
 
 [project]
-name = "geoparquet-patterns"
+name = "geoparquet-cookbook"
 version = "0.1.0"
 description = "Practical patterns and reference implementations for GeoParquet — columnar geospatial analytics"
 readme = "README.md"
@@ -47,9 +47,9 @@ all = [
 ]
 
 [project.urls]
-Homepage = "https://github.com/zqmcomputing/geoparquet-patterns"
-Documentation = "https://github.com/zqmcomputing/geoparquet-patterns#readme"
-Repository = "https://github.com/zqmcomputing/geoparquet-patterns"
+Homepage = "https://github.com/zqmcomputing/geoparquet-cookbook"
+Documentation = "https://github.com/zqmcomputing/geoparquet-cookbook#readme"
+Repository = "https://github.com/zqmcomputing/geoparquet-cookbook"
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
