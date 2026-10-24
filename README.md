@@ -1,5 +1,6 @@
 # GeoParquet Patterns
 ![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg) ![GitHub](https://img.shields.io/github/stars/ZQM-Computing/geoparquet-patterns?style=social)
+![CI](https://github.com/ZQM-Computing/geoparquet-cookbook/actions/workflows/ci.yml/badge.svg)
 
 <!-- ZQM-START -->
 <!-- markdownlint-disable MD033 -->
