@@ -1,5 +1,5 @@
 # GeoParquet Patterns
-![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg) ![GitHub](https://img.shields.io/github/stars/ZQM-Computing/geoparquet-patterns?style=social)
+![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg) ![GitHub](https://img.shields.io/github/stars/ZQM-Computing/geoparquet-cookbook?style=social)
 ![CI](https://github.com/ZQM-Computing/geoparquet-cookbook/actions/workflows/ci.yml/badge.svg)
 
 <!-- ZQM-START -->
@@ -43,7 +43,7 @@ Built for **data engineers** and **data scientists** who need fast, interoperabl
 ## Repository Structure
 
 ```text
-geoparquet-patterns/
+geoparquet-cookbook/
 ├── examples/
 │   ├── 01-cog-creation/          # Create Cloud-Optimized GeoTIFFs + GeoParquet
 │   ├── 02-partitioning/          # Hive partitioning strategies for spatial data
@@ -142,11 +142,11 @@ The configured CI workflow is the source of truth for automated checks. A passin
 
 ## License
 
-MIT — see [LICENSE](https://github.com/ZQM-Computing/geoparquet-patterns/blob/main/LICENSE).
+MIT — see [LICENSE](https://github.com/ZQM-Computing/geoparquet-cookbook/blob/main/LICENSE).
 
 ## Contributing
 
-See [CONTRIBUTING.md](https://github.com/ZQM-Computing/geoparquet-patterns/blob/main/CONTRIBUTING.md).
+See [CONTRIBUTING.md](https://github.com/ZQM-Computing/geoparquet-cookbook/blob/main/CONTRIBUTING.md).
 
 *Part of [ZQM Computing](https://github.com/ZQM-Computing) — geospatial engineering, scientific computing, and infrastructure patterns; the geospatial arm of [ZQM Labs](https://zqmlabs.com), makers of Z's Quests & Mischief location games.*
 
