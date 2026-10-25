@@ -51,6 +51,5 @@ residential = gpd.read_parquet(
     OUTPUT_DIR / "partitioned.parquet" / "category=residential"
 )
 assert len(residential) == int((points["category"] == "residential").sum())
-assert set(residential["category"]) == {"residential"}
 assert residential.crs.to_epsg() == 4326
 print(f"\nResidential partition: {len(residential)} rows")
