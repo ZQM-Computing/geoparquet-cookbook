@@ -23,8 +23,10 @@ jobs:
           python-version: '3.11'
       - name: Install dependencies
         run: |
-          pip install pytest
-          if [ -f "requirements.txt" ]; then pip install -r requirements.txt; fi
+          python -m pip install --upgrade pip
+          if [ -f "requirements.txt" ]; then python -m pip install -r requirements.txt; fi
+          if [ -f "pyproject.toml" ] || [ -f "setup.py" ]; then python -m pip install -e .; fi
+          python -m pip install pytest
       - name: Run tests
         run: |
           if [ -f "pytest.ini" ] || [ -f "pyproject.toml" ]; then
