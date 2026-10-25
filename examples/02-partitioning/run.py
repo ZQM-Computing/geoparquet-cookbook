@@ -20,7 +20,7 @@ lngs = rng.uniform(-80.95, -80.90, n)
 values = rng.integers(1, 100, n)
 
 points = gpd.GeoDataFrame(
-    {"category": categories, "value": values},
+    {"site_id": np.arange(1, n + 1), "name": [f"Site {i:04d}" for i in range(1, n + 1)], "category": categories, "value": values},
     geometry=gpd.points_from_xy(lngs, lats),
     crs="EPSG:4326",
 ).rename_geometry("geom")
