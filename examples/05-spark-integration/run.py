@@ -61,7 +61,7 @@ def main() -> None:
         source_count = dataset.count()
         grouped_count = sum(
             item["row_count"]
-            for item in dataset.groupBy("category").count().collect()
+            for item in dataset.groupBy("category").agg(count("*").alias("row_count")).collect()
         )
         if grouped_count != source_count or source_count != 1000:
             raise AssertionError(
