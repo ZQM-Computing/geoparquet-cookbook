@@ -31,7 +31,7 @@ points.to_parquet(points_path, index=False)
 
 # GeoDataFrame.to_parquet writes one Parquet file; partitioned datasets must be
 # written with PyArrow's dataset API. Keep the GeoParquet schema metadata intact.
-table = pa.table(points.to_arrow(index=False))
+table = points.to_arrow(index=False)
 partition_schema = pa.schema([("category", table.schema.field("category").type)])
 ds.write_dataset(
     table,
