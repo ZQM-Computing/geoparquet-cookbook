@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
 """Example 01: Create GeoParquet files."""
 
+from pathlib import Path
+
 import geopandas as gpd
 import pyarrow.parquet as pq
 from shapely.geometry import Point
@@ -18,7 +20,9 @@ points = gpd.GeoDataFrame(
     crs="EPSG:4326",
 )
 
-# Write to GeoParquet
+# Write to GeoParquet (create the output directory first: pyarrow does not
+# create missing parent directories, so a fresh checkout fails without this).
+Path("output").mkdir(parents=True, exist_ok=True)
 points.to_parquet("output/points.parquet", index=False)
 print("Written to output/points.parquet")
 
