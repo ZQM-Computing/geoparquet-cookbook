@@ -1,6 +1,6 @@
 site_name: GeoParquet Patterns
 site_url: https://geoparquet.zqmlabs.com/
-site_description: GeoParquet patterns — partitioning, predicate pushdown, DuckDB/Spark integration, benchmarks
+site_description: GeoParquet examples for columnar geospatial data, partitioning, predicate pushdown, CRS and geometry metadata, and DuckDB/Spark/GeoPandas interoperability.
 site_author: ZQM Computing
 repo_url: https://github.com/ZQM-Computing/geoparquet-cookbook
 
@@ -14,6 +14,7 @@ theme:
     - search.highlight
 
 markdown_extensions:
+  - meta
   - admonition
   - codehilite
   - toc:
