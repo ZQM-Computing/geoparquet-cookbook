@@ -118,6 +118,27 @@ into your own pipeline and point it at your data.
 - `pyarrow` >= 15.0
 - `rasterio` (for COG example)
 
+## Optional integrations
+
+### PySpark
+
+The Spark example is an executable Parquet/Hive-partitioning integration check.
+It validates that all 1,000 fixture rows are accounted for and reports the
+residential partition summary. Spark reads the geometry column as stored
+Parquet data; geometry operations require a spatial engine such as Apache
+Sedona and are intentionally not presented as native Spark SQL behavior.
+
+Run the producer before the Spark consumer:
+
+```bash
+pip install -e ".[spark]"
+python examples/02-partitioning/run.py
+spark-submit examples/05-spark-integration/run.py
+```
+
+The example requires a working Java runtime and Spark installation. It is not
+part of the default dependency set because PySpark is an optional extra.
+
 ## More from this series
 
 - [postgis-cookbook](https://github.com/ZQM-Computing/postgis-cookbook) — Production PostGIS patterns: spatial indexing, joins & KNN, SRID management, vector tiles, data quality, partitioning
