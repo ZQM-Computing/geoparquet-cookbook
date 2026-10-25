@@ -13,7 +13,7 @@
 <!-- markdownlint-enable MD033 -->
 <!-- ZQM-END -->
 
-Production-tested GeoParquet patterns — partitioning, predicate pushdown, standardized metadata, and interoperability with DuckDB, Spark, Polars, and GeoPandas, with performance benchmarks.
+Runnable GeoParquet examples covering partitioning, predicate pushdown, standardized metadata, and interoperability with DuckDB, Spark, Polars, and GeoPandas. Performance benchmarks are environment-specific and do not establish production suitability.
 
 ## Repository role and status
 
