@@ -72,8 +72,8 @@ json_read_time = perf_counter() - start
 json_size = geojson_path.stat().st_size / (1024 * 1024)
 assert len(loaded_json) == n
 assert loaded_json.crs.to_epsg() == 4326
-assert loaded_json["site_id"].equals(points["site_id"])
-assert loaded_json.geometry.equals(points.geometry)
+assert np.array_equal(loaded_json["site_id"].to_numpy(dtype=np.int64), points["site_id"].to_numpy())
+assert loaded_json.geometry.geom_equals(points.geometry).all()
 assert json_size > 0
 print(
     f"GeoJSON write/read: {json_write_time:.3f}s / {json_read_time:.3f}s "
