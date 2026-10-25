@@ -71,24 +71,47 @@ pip install -e ".[dev]"
 ## Quick Start
 
 ```python
+from pathlib import Path
+
+import duckdb
 import geopandas as gpd
 import polars as pl
 
-# Write GeoParquet
-gdf = gpd.read_file("data/buildings.geojson")
-gdf.to_parquet("data/buildings.parquet", layer="buildings")
+output = Path("data/buildings.parquet")
+output.parent.mkdir(parents=True, exist_ok=True)
 
-# Read with Polars (metadata-aware)
-df = pl.scan_parquet("data/buildings.parquet")
+# Create a tiny deterministic fixture so this quick start needs no download.
+gdf = gpd.GeoDataFrame(
+    {"building_id": [1, 2], "kind": ["inside", "outside"]},
+    geometry=gpd.points_from_xy([-122.45, -121.0], [37.75, 38.0]),
+    crs="EPSG:4326",
+).rename_geometry("geom")
+gdf.to_parquet(output, index=False)
+
+# Inspect the Parquet schema with Polars.
+df = pl.scan_parquet(output)
 print(df.collect_schema())
 
-# Query with DuckDB
-import duckdb
-
-duckdb.sql("""
-    SELECT * FROM 'data/buildings.parquet'
-    WHERE ST_Intersects(geom, ST_MakeEnvelope(-122.5, 37.7, -122.4, 37.8))
-""").show()
+# Query the WKB geometry with DuckDB Spatial.
+con = duckdb.connect()
+try:
+    con.execute("INSTALL spatial; LOAD spatial;")
+    result = con.execute(
+        """
+        SELECT building_id, kind
+        FROM read_parquet(?)
+        WHERE ST_Intersects(
+            ST_GeomFromWKB(geom),
+            ST_MakeEnvelope(-122.5, 37.7, -122.4, 37.8)
+        )
+        ORDER BY building_id
+        """,
+        [output.as_posix()],
+    ).fetchall()
+    assert result == [(1, "inside")]
+    print(result)
+finally:
+    con.close()
 ```
 
 ## Usage
