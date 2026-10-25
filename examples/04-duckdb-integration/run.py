@@ -53,8 +53,10 @@ try:
     ).fetchdf()
     assert not result2.empty
     assert result2["h3_cell"].notna().all()
-    assert int(result2["cnt"].sum()) <= 1000
+    assert result2["h3_cell"].is_unique
+    assert int(result2["cnt"].sum()) == 1000
+    assert (result2["cnt"] > 0).all()
     print("\nTop 5 H3 cells by count:")
-    print(result2)
+    print(result2.head(5))
 finally:
     con.close()
