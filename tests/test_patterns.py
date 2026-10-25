@@ -76,6 +76,27 @@ def test_partitioning_and_duckdb_examples(tmp_path):
         assert expected_output in result.stdout
 
 
+
+def test_performance_example_is_self_contained(tmp_path):
+    """The benchmark creates its own output and validates both format round trips."""
+    script = EXAMPLES_DIR / "06-performance" / "run.py"
+    result = subprocess.run(
+        [sys.executable, str(script)],
+        cwd=tmp_path,
+        capture_output=True,
+        text=True,
+        check=False,
+    )
+    assert result.returncode == 0, result.stdout + result.stderr
+    assert "GeoParquet full read: " in result.stdout
+    assert "GeoParquet filtered read: " in result.stdout
+    assert "GeoJSON write/read: " in result.stdout
+
+    output_dir = tmp_path / "output"
+    assert (output_dir / "benchmark.parquet").is_file()
+    assert (output_dir / "benchmark.geojson").is_file()
+
+
 def test_readme_exists():
     """README.md exists."""
     assert (REPO_ROOT / "README.md").exists()
