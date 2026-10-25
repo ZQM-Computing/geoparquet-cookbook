@@ -7,6 +7,7 @@ import geopandas as gpd
 import numpy as np
 import pyarrow as pa
 import pyarrow.dataset as ds
+import pyarrow.parquet as pq
 
 OUTPUT_DIR = Path("output")
 OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
@@ -31,7 +32,7 @@ points.to_parquet(points_path, index=False)
 
 # GeoDataFrame.to_parquet writes one Parquet file; partitioned datasets must be
 # written with PyArrow's dataset API. Keep the GeoParquet schema metadata intact.
-table = points.to_arrow(index=False)
+table = pq.read_table(points_path)
 partition_schema = pa.schema([("category", table.schema.field("category").type)])
 ds.write_dataset(
     table,
