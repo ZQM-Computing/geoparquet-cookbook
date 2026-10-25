@@ -47,7 +47,6 @@ try:
         FROM read_parquet(?)
         GROUP BY h3_cell
         ORDER BY cnt DESC, h3_cell
-        LIMIT 5
         """,
         [points_path.as_posix()],
     ).fetchdf()
