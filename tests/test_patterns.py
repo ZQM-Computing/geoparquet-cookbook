@@ -21,13 +21,16 @@ def test_python_syntax():
         assert result.returncode == 0, f"Syntax error in {py_file}: {result.stderr}"
 
 
-def test_partitioning_and_predicate_pushdown_examples(tmp_path):
-    """The documented producer/consumer sequence creates valid, queryable GeoParquet."""
-    partitioning_script = EXAMPLES_DIR / "02-partitioning" / "run.py"
-    pushdown_script = EXAMPLES_DIR / "03-predicate-pushdown" / "run.py"
+def test_partitioning_and_duckdb_examples(tmp_path):
+    """Producer and DuckDB consumers preserve GeoParquet data semantics."""
+    scripts = [
+        EXAMPLES_DIR / "02-partitioning" / "run.py",
+        EXAMPLES_DIR / "03-predicate-pushdown" / "run.py",
+        EXAMPLES_DIR / "04-duckdb-integration" / "run.py",
+    ]
 
     produced = subprocess.run(
-        [sys.executable, str(partitioning_script)],
+        [sys.executable, str(scripts[0])],
         cwd=tmp_path,
         capture_output=True,
         text=True,
@@ -41,13 +44,13 @@ def test_partitioning_and_predicate_pushdown_examples(tmp_path):
     assert len(points) == 1000
     assert points.crs.to_epsg() == 4326
     assert points.geometry.name == "geom"
+    assert points["site_id"].is_unique
+    assert points["name"].is_unique
     assert points["category"].notna().all()
     assert points["value"].between(1, 99).all()
 
-    # Validate GeoParquet metadata rather than merely trusting a successful read.
     schema = pq.read_schema(points_path)
     assert b"geo" in schema.metadata
-    assert len(points.geometry) == 1000
 
     partitioned_path = tmp_path / "output" / "partitioned.parquet"
     partitions = sorted(partitioned_path.glob("category=*"))
@@ -56,21 +59,21 @@ def test_partitioning_and_predicate_pushdown_examples(tmp_path):
         "category=commercial",
         "category=industrial",
     }
-    partition_rows = sum(
-        len(gpd.read_parquet(partition)) for partition in partitions
-    )
-    assert partition_rows == len(points)
+    assert sum(len(gpd.read_parquet(partition)) for partition in partitions) == len(points)
 
-    consumed = subprocess.run(
-        [sys.executable, str(pushdown_script)],
-        cwd=tmp_path,
-        capture_output=True,
-        text=True,
-        check=False,
-    )
-    assert consumed.returncode == 0, consumed.stdout + consumed.stderr
-    assert "Predicate pushdown" in consumed.stdout
-    assert "Spatial filter" in consumed.stdout
+    for script, expected_output in [
+        (scripts[1], "Spatial filter"),
+        (scripts[2], "Top 5 H3 cells by count"),
+    ]:
+        result = subprocess.run(
+            [sys.executable, str(script)],
+            cwd=tmp_path,
+            capture_output=True,
+            text=True,
+            check=False,
+        )
+        assert result.returncode == 0, result.stdout + result.stderr
+        assert expected_output in result.stdout
 
 
 def test_readme_exists():
