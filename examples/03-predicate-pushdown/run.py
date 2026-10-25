@@ -35,7 +35,7 @@ try:
         SELECT COUNT(*) AS cnt
         FROM read_parquet(?)
         WHERE ST_Within(
-            ST_GeomFromWKB(geom),
+            geom,
             ST_MakeEnvelope(-80.95, 28.95, -80.90, 29.05)
         )
         """,
