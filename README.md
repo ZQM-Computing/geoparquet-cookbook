@@ -71,24 +71,41 @@ pip install -e ".[dev]"
 ## Quick Start
 
 ```python
+from pathlib import Path
+
+import duckdb
 import geopandas as gpd
 import polars as pl
 
-# Write GeoParquet
-gdf = gpd.read_file("data/buildings.geojson")
-gdf.to_parquet("data/buildings.parquet", layer="buildings")
+output = Path("data/buildings.parquet")
+output.parent.mkdir(parents=True, exist_ok=True)
 
-# Read with Polars (metadata-aware)
-df = pl.scan_parquet("data/buildings.parquet")
+# Write GeoParquet. Rename the active geometry column so the query below
+# uses the explicit, stable column name "geom".
+gdf = gpd.read_file("data/buildings.geojson").rename_geometry("geom")
+gdf.to_parquet(output, index=False)
+
+# Inspect the Parquet schema with Polars.
+df = pl.scan_parquet(output)
 print(df.collect_schema())
 
-# Query with DuckDB
-import duckdb
-
-duckdb.sql("""
-    SELECT * FROM 'data/buildings.parquet'
-    WHERE ST_Intersects(geom, ST_MakeEnvelope(-122.5, 37.7, -122.4, 37.8))
-""").show()
+# Query the WKB geometry with DuckDB Spatial.
+con = duckdb.connect()
+try:
+    con.execute("INSTALL spatial; LOAD spatial;")
+    con.execute(
+        """
+        SELECT *
+        FROM read_parquet(?)
+        WHERE ST_Intersects(
+            ST_GeomFromWKB(geom),
+            ST_MakeEnvelope(-122.5, 37.7, -122.4, 37.8)
+        )
+        """,
+        [output.as_posix()],
+    ).show()
+finally:
+    con.close()
 ```
 
 ## Usage
