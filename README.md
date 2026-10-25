@@ -13,7 +13,7 @@
 <!-- markdownlint-enable MD033 -->
 <!-- ZQM-END -->
 
-Runnable GeoParquet examples for columnar geospatial data: partitioning, predicate pushdown, geometry/CRS metadata, and interoperability with DuckDB, Spark, Polars, and GeoPandas. Benchmarks are environment-specific; validate schema compatibility, metadata, and workload performance against your own data.
+A **GeoParquet cookbook for columnar geospatial data engineering and analytics**. Examples cover partitioning, predicate pushdown, geometry and CRS metadata, and interoperability with DuckDB, Apache Spark, Polars, and GeoPandas. Designed for data engineers and GIS developers building portable analytical pipelines; validate schema/version compatibility, metadata preservation, and performance on your own data because benchmark results depend on the environment and workload.
 
 ## Repository role and status
 
