@@ -120,6 +120,20 @@ into your own pipeline and point it at your data.
 
 ## Optional integrations
 
+### COG creation and footprint indexing
+
+The COG example generates a deterministic sample GeoTIFF, translates it to a
+Cloud-Optimized GeoTIFF, validates the COG layout, and writes the raster
+footprint and asset name to GeoParquet. It does not require external data.
+
+```bash
+pip install -e ".[cog]"
+python examples/01-cog-creation/run.py
+```
+
+The `cog` extra supplies Rasterio and rio-cogeo. The script exits with an
+installation hint when these optional packages are unavailable.
+
 ### PySpark
 
 The Spark example is an executable Parquet/Hive-partitioning integration check.

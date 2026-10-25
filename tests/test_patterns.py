@@ -21,6 +21,25 @@ def test_python_syntax():
         assert result.returncode == 0, f"Syntax error in {py_file}: {result.stderr}"
 
 
+
+def test_cog_example_reports_optional_dependencies_or_runs(tmp_path):
+    """The COG example either runs end-to-end or explains its optional extra."""
+    script = EXAMPLES_DIR / "01-cog-creation" / "run.py"
+    result = subprocess.run(
+        [sys.executable, str(script)],
+        cwd=tmp_path,
+        capture_output=True,
+        text=True,
+        check=False,
+    )
+    if result.returncode == 0:
+        assert "COG created and validated" in result.stdout
+        assert (tmp_path / "output" / "synthetic-dem-cog.tif").is_file()
+        assert (tmp_path / "output" / "raster-footprint.parquet").is_file()
+    else:
+        assert 'pip install -e ".[cog]"' in result.stdout + result.stderr
+
+
 def test_partitioning_and_duckdb_examples(tmp_path):
     """Producer and DuckDB consumers preserve GeoParquet data semantics."""
     scripts = [
