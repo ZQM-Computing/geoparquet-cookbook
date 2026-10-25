@@ -19,7 +19,7 @@ try:
         """
         SELECT
             name,
-            ST_AsText(ST_GeomFromWKB(geom)) AS geometry_wkt,
+            ST_AsText(geom) AS geometry_wkt,
             value
         FROM read_parquet(?)
         WHERE value > 25
@@ -38,8 +38,8 @@ try:
         """
         SELECT
             h3_latlng_to_cell(
-                ST_Y(ST_GeomFromWKB(geom)),
-                ST_X(ST_GeomFromWKB(geom)),
+                ST_Y(geom),
+                ST_X(geom),
                 8
             ) AS h3_cell,
             COUNT(*) AS cnt,
