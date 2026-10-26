@@ -149,6 +149,18 @@ def test_performance_example_is_self_contained(tmp_path):
     assert (output_dir / "benchmark.parquet").is_file()
     assert (output_dir / "benchmark.geojson").is_file()
 
+def test_readme_optional_cog_commands_are_separate_shell_lines():
+    """Optional example commands must be copy/pasteable, not literal escaped newlines."""
+    readme = (REPO_ROOT / "README.md").read_text(encoding="utf-8")
+    assert r"python examples/01-creation/run.py\n\n# Optional" not in readme
+    assert "python examples/01-creation/run.py\n\n# Optional: create a COG" in readme
+
+
+def test_readme_distinguishes_ci_handoff_from_production_dependency():
+    readme = (REPO_ROOT / "README.md").read_text(encoding="utf-8")
+    assert "pinned synthetic GeoParquet/DuckDB handoff in CI" in readme
+    assert "no other repository or deployment depends on it" not in readme
+
 
 def test_readme_exists():
     """README.md exists."""
