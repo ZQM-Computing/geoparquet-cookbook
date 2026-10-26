@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Tests for geoparquet-cookbook."""
 
+import json
 import subprocess
 import sys
 from pathlib import Path
@@ -104,6 +105,13 @@ def test_partitioning_and_duckdb_examples(tmp_path):
 
     schema = pq.read_schema(points_path)
     assert b"geo" in schema.metadata
+    geo_metadata = json.loads(schema.metadata[b"geo"])
+    assert geo_metadata["version"] in {"1.0.0", "1.1.0"}
+    assert geo_metadata["primary_column"] == "geom"
+    geometry_metadata = geo_metadata["columns"]["geom"]
+    assert geometry_metadata["encoding"] == "WKB"
+    assert "Point" in geometry_metadata["geometry_types"]
+    assert geometry_metadata.get("crs") is not None
 
     partitioned_path = tmp_path / "output" / "partitioned.parquet"
     partitions = sorted(partitioned_path.glob("category=*"))
@@ -112,7 +120,16 @@ def test_partitioning_and_duckdb_examples(tmp_path):
         "category=commercial",
         "category=industrial",
     }
-    assert sum(len(gpd.read_parquet(partition)) for partition in partitions) == len(points)
+    partition_counts = {
+        partition.name: len(gpd.read_parquet(partition))
+        for partition in partitions
+    }
+    assert sum(partition_counts.values()) == len(points)
+    expected_counts = {
+        f"category={category}": int((points["category"] == category).sum())
+        for category in ("residential", "commercial", "industrial")
+    }
+    assert partition_counts == expected_counts
 
     for script, expected_output in [
         (scripts[1], "Spatial filter"),
