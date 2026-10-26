@@ -10,6 +10,40 @@ import pyarrow.parquet as pq
 
 REPO_ROOT = Path(__file__).parent.parent
 EXAMPLES_DIR = REPO_ROOT / "examples"
+EXPECTED_EXAMPLES = {
+    "01-creation",
+    "01-cog-creation",
+    "02-partitioning",
+    "03-predicate-pushdown",
+    "04-duckdb-integration",
+    "05-spark-integration",
+    "06-performance",
+}
+
+
+def test_exact_example_inventory():
+    """The documented example tree cannot silently drift from its seven entry points."""
+    actual = {path.parent.name for path in EXAMPLES_DIR.glob("*/run.py")}
+    assert actual == EXPECTED_EXAMPLES, (
+        f"Example inventory mismatch. Missing: {sorted(EXPECTED_EXAMPLES - actual)}; "
+        f"unexpected: {sorted(actual - EXPECTED_EXAMPLES)}"
+    )
+
+
+def test_basic_creation_round_trip(tmp_path):
+    """The base GeoParquet example writes a readable synthetic point dataset."""
+    script = EXAMPLES_DIR / "01-creation" / "run.py"
+    result = subprocess.run(
+        [sys.executable, str(script)], cwd=tmp_path, capture_output=True, text=True, check=False
+    )
+    assert result.returncode == 0, result.stdout + result.stderr
+    assert "Written to output/points.parquet" in result.stdout
+    output = tmp_path / "output" / "points.parquet"
+    assert output.is_file()
+    points = gpd.read_parquet(output)
+    assert len(points) == 5
+    assert points.crs.to_epsg() == 4326
+    assert points["name"].tolist() == ["A", "B", "C", "D", "E"]
 
 
 def test_python_syntax():

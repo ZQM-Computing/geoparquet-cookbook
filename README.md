@@ -46,7 +46,8 @@ Built for **data engineers** and **data scientists** who need fast, interoperabl
 ```text
 geoparquet-cookbook/
 ├── examples/
-│   ├── 01-cog-creation/          # Create Cloud-Optimized GeoTIFFs + GeoParquet
+│   ├── 01-creation/              # Basic GeoParquet write/read and metadata inspection
+│   ├── 01-cog-creation/          # Optional COG creation and GeoParquet footprint index
 │   ├── 02-partitioning/          # Hive partitioning strategies for spatial data
 │   ├── 03-predicate-pushdown/    # Row-group and page-level filtering
 │   ├── 04-duckdb-integration/    # DuckDB for local & serverless analytics
@@ -125,7 +126,8 @@ into your own pipeline and point it at your data.
 
 | # | Topic | Engine | Key Concepts |
 |---|-------|--------|--------------|
-| 01 | COG Creation | rasterio / rio-cogeo | Cloud-Optimized GeoTIFF, tiling, overview |
+| 01 | GeoParquet Creation | GeoPandas / PyArrow | Write/read round trip, schema and metadata inspection |
+| 01b | COG Creation | Rasterio / rio-cogeo | Cloud-Optimized GeoTIFF, validation, footprint index (optional `cog` extra) |
 | 02 | Partitioning | GeoPandas / Polars | Hive partitioning, spatial index |
 | 03 | Predicate Pushdown | DuckDB / Polars | Row-group filtering, bloom filters |
 | 04 | DuckDB Integration | DuckDB + geoparquet extension | In-process analytics, httpfs, spatial index |
@@ -151,7 +153,7 @@ footprint and asset name to GeoParquet. It does not require external data.
 
 ```bash
 pip install -e ".[cog]"
-python examples/01-cog-creation/run.py
+python examples/01-creation/run.py\n\n# Optional: create a COG and index its footprint (requires the [cog] extra)\npython examples/01-cog-creation/run.py
 ```
 
 The `cog` extra supplies Rasterio and rio-cogeo. The script exits with an
