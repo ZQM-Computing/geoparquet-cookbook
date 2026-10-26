@@ -9,10 +9,10 @@ import geopandas as gpd
 import pyarrow.parquet as pq
 
 REPO_ROOT = Path(__file__).parent.parent
-EXAMPLES_DIR = REPO_ROOT / "examples"
+EXAMPLES_DIR = REPO_ROOT / "examples"\nEXPECTED_EXAMPLES = {\n    "01-creation",\n    "01-cog-creation",\n    "02-partitioning",\n    "03-predicate-pushdown",\n    "04-duckdb-integration",\n    "05-spark-integration",\n    "06-performance",\n}
 
 
-def test_python_syntax():
+def test_exact_example_inventory():\n    """The documented example tree cannot silently drift from its seven entry points."""\n    actual = {path.parent.name for path in EXAMPLES_DIR.glob("*/run.py")}\n    assert actual == EXPECTED_EXAMPLES, (\n        f"Example inventory mismatch. Missing: {sorted(EXPECTED_EXAMPLES - actual)}; "\n        f"unexpected: {sorted(actual - EXPECTED_EXAMPLES)}"\n    )\n\n\ndef test_basic_creation_round_trip(tmp_path):\n    """The base GeoParquet example writes a readable synthetic point dataset."""\n    script = EXAMPLES_DIR / "01-creation" / "run.py"\n    result = subprocess.run(\n        [sys.executable, str(script)], cwd=tmp_path, capture_output=True, text=True, check=False\n    )\n    assert result.returncode == 0, result.stdout + result.stderr\n    assert "Written to output/points.parquet" in result.stdout\n    output = tmp_path / "output" / "points.parquet"\n    assert output.is_file()\n    points = gpd.read_parquet(output)\n    assert len(points) == 5\n    assert points.crs.to_epsg() == 4326\n    assert points["name"].tolist() == ["A", "B", "C", "D", "E"]\n\n\ndef test_python_syntax():
     """All Python examples have valid syntax."""
     for py_file in sorted(EXAMPLES_DIR.glob("*/run.py")):
         result = subprocess.run(
