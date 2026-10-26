@@ -126,7 +126,8 @@ into your own pipeline and point it at your data.
 
 | # | Topic | Engine | Key Concepts |
 |---|-------|--------|--------------|
-| 01 | GeoParquet Creation | GeoPandas / PyArrow | Write/read round trip, schema and metadata inspection |\n| 01b | COG Creation | Rasterio / rio-cogeo | Cloud-Optimized GeoTIFF, validation, footprint index (optional `cog` extra) |
+| 01 | GeoParquet Creation | GeoPandas / PyArrow | Write/read round trip, schema and metadata inspection |
+| 01b | COG Creation | Rasterio / rio-cogeo | Cloud-Optimized GeoTIFF, validation, footprint index (optional `cog` extra) |
 | 02 | Partitioning | GeoPandas / Polars | Hive partitioning, spatial index |
 | 03 | Predicate Pushdown | DuckDB / Polars | Row-group filtering, bloom filters |
 | 04 | DuckDB Integration | DuckDB + geoparquet extension | In-process analytics, httpfs, spatial index |
