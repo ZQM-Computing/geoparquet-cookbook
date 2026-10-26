@@ -23,7 +23,7 @@ A **GeoParquet cookbook for columnar geospatial data engineering and analytics**
 
 **What it contributes:** Part of the ZQM Computing public geospatial portfolio — production-grade pattern and reference repositories that document geospatial engineering practice across the stack. This repository is the reusable pattern library for its layer: working code and runbooks that practitioners can lift into their own pipelines, and portfolio evidence of the engineering practice behind ZQM Computing. The umbrella index for the series is [geospatial-cookbooks](https://github.com/ZQM-Computing/geospatial-cookbooks).
 
-**Standing:** This repository is maintained independently. Automated checks cover only the paths and environments configured in its workflows; they do not establish production readiness or operational certification. This repository is standalone — no other repository or deployment depends on it.
+**Standing:** This repository is maintained independently. Automated checks cover only the paths and environments configured in its workflows; they do not establish production readiness or operational certification. No production deployment is declared to depend on it. The ZQM Observatory consumes a pinned synthetic GeoParquet/DuckDB handoff in CI; that test integration is not a production runtime dependency.
 
 ## Who this is for
 
@@ -153,7 +153,10 @@ footprint and asset name to GeoParquet. It does not require external data.
 
 ```bash
 pip install -e ".[cog]"
-python examples/01-creation/run.py\n\n# Optional: create a COG and index its footprint (requires the [cog] extra)\npython examples/01-cog-creation/run.py
+python examples/01-creation/run.py
+
+# Optional: create a COG and index its footprint (requires the [cog] extra)
+python examples/01-cog-creation/run.py
 ```
 
 The `cog` extra supplies Rasterio and rio-cogeo. The script exits with an
