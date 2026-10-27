@@ -21,7 +21,7 @@ A **GeoParquet cookbook for columnar geospatial data engineering and analytics**
 
 **What this repository is:** GeoParquet patterns — a practical guide and reference implementation for the open columnar geospatial format: partitioning, predicate pushdown, standardized metadata, and interoperability with DuckDB, Spark, Polars, and GeoPandas.
 
-**What it contributes:** Part of the ZQM Computing public geospatial portfolio — production-grade pattern and reference repositories that document geospatial engineering practice across the stack. This repository is the reusable pattern library for its layer: working code and runbooks that practitioners can lift into their own pipelines, and portfolio evidence of the engineering practice behind ZQM Computing. The umbrella index for the series is [geospatial-cookbooks](https://github.com/ZQM-Computing/geospatial-cookbooks).
+**What it contributes:** Part of the ZQM Computing public geospatial portfolio — reference repositories that document geospatial engineering methods across the stack. This repository provides reusable GeoParquet examples and operational notes for adapting to a team's own data, schemas, dependency versions, and deployment constraints. Treat the examples as starting points to review and test, not as drop-in production components. The umbrella index for the series is [geospatial-cookbooks](https://github.com/ZQM-Computing/geospatial-cookbooks).
 
 **Standing:** This repository is maintained independently. Automated checks cover only the paths and environments configured in its workflows; they do not establish production readiness or operational certification. No production deployment is declared to depend on it. The ZQM Observatory consumes a pinned synthetic GeoParquet/DuckDB handoff in CI; that test integration is not a production runtime dependency.
 
@@ -31,7 +31,7 @@ Data engineers, data scientists, and analytics engineers who work with large-sca
 
 A practical guide and reference implementation for working with [GeoParquet](https://geoparquet.org/) — an open, columnar format for geospatial data built on Apache Parquet.
 
-Built for **data engineers** and **data scientists** who need fast, interoperable geospatial analytics at scale.
+Built for **data engineers** and **data scientists** who need interoperable geospatial analytics. Actual storage savings and query speed depend on geometry complexity, column selection, partition layout, compression, engine versions, and workload; benchmark representative data before choosing a format or layout.
 
 ## Why GeoParquet?
 
@@ -63,11 +63,26 @@ geoparquet-cookbook/
 
 ## Installation
 
+Run these commands from a local clone, preferably inside a virtual environment:
+
 ```bash
-pip install -e .
-# or with dev dependencies
-pip install -e ".[dev]"
+python -m venv .venv
+# Linux/macOS:
+source .venv/bin/activate
+# Windows PowerShell:
+# .venv\\Scripts\\Activate.ps1
+python -m pip install --upgrade pip
+python -m pip install -e .
 ```
+
+For the repository's default automated tests and lint tooling, install the development extra instead of the base package:
+
+```bash
+python -m pip install -e ".[dev]"
+python -m pytest
+```
+
+The `[cog]` and `[spark]` extras are optional and are described below. The `[all]` extra installs a broader set of integrations and may be substantially heavier.
 
 ## Quick Start
 
@@ -81,7 +96,7 @@ import polars as pl
 output = Path("data/buildings.parquet")
 output.parent.mkdir(parents=True, exist_ok=True)
 
-# Create a tiny deterministic fixture so this quick start needs no download.
+# Create a tiny deterministic fixture; no external dataset is downloaded.
 gdf = gpd.GeoDataFrame(
     {"building_id": [1, 2], "kind": ["inside", "outside"]},
     geometry=gpd.points_from_xy([-122.45, -121.0], [37.75, 38.0]),
@@ -96,6 +111,8 @@ print(df.collect_schema())
 # Query the WKB geometry with DuckDB Spatial.
 con = duckdb.connect()
 try:
+    # DuckDB may download its Spatial extension on first use; network access
+    # may be required even though this example does not download a dataset.
     con.execute("INSTALL spatial; LOAD spatial;")
     result = con.execute(
         """
@@ -117,10 +134,12 @@ finally:
 
 ## Usage
 
-After [Installation](#installation), work through the
-[Quick Start](#quick-start) and the [Examples](#examples): each example
-reads or writes real GeoParquet files, so you can lift the code straight
-into your own pipeline and point it at your data.
+After [Installation](#installation), run the [Quick Start](#quick-start), then
+review the [Examples](#examples). Examples differ in their runtime needs and
+maturity: some require optional extras, Java/Spark, or a spatial extension, and
+some are demonstrations rather than production-ready pipeline components.
+Adapt them to your schema, CRS, data volume, security requirements, and target
+runtime; validate results and performance on representative data before use.
 
 ## Examples
 
@@ -141,7 +160,7 @@ into your own pipeline and point it at your data.
 - `polars` >= 1.0
 - `geopandas` >= 1.0
 - `pyarrow` >= 15.0
-- `rasterio` (for COG example)
+- `rasterio` and `rio-cogeo` (optional; required only for the COG example and installed by the `[cog]` extra)
 
 ## Optional integrations
 
