@@ -5,6 +5,8 @@ Timings are a single local run, not a statistically controlled performance claim
 Use representative data and repeated trials before comparing production systems.
 """
 
+import json
+import platform
 from pathlib import Path
 from time import perf_counter
 
@@ -84,3 +86,45 @@ print(
 if read_time > 0:
     print(f"Single-run read-time ratio (GeoJSON / GeoParquet): {json_read_time / read_time:.2f}x")
 print(f"File-size ratio (GeoJSON / GeoParquet): {json_size / write_size:.2f}x")
+
+# Preserve exact bytes, environment and validated semantics for shareable claims.
+# Never substitute a benchmark from a different dataset or cite these as
+# Shapefile conversion results: this example compares GeoJSON and GeoParquet.
+report = {
+    "schema_version": 1,
+    "status": "single_local_smoke_run_not_statistically_controlled",
+    "dataset": "synthetic_random_points_seed_42",
+    "rows": n,
+    "formats": ["GeoParquet", "GeoJSON"],
+    "reference_crs": "EPSG:4326",
+    "roundtrip_verified": True,
+    "filtered_category_A_rows": expected_filtered,
+    "sizes_bytes": {
+        "geoparquet": parquet_path.stat().st_size,
+        "geojson": geojson_path.stat().st_size,
+    },
+    "times_seconds": {
+        "geoparquet_write": write_time,
+        "geoparquet_full_read": read_time,
+        "geoparquet_filtered_read": filter_time,
+        "geojson_write": json_write_time,
+        "geojson_full_read": json_read_time,
+    },
+    "size_ratio_geojson_over_geoparquet": (
+        geojson_path.stat().st_size / parquet_path.stat().st_size
+    ),
+    "environment": {"python": platform.python_version(), "geopandas": gpd.__version__,
+                    "numpy": np.__version__},
+    "limitations": [
+        "One run only; timings are not universal speed claims.",
+        "Synthetic point geometries, not 1.1M production polygons.",
+        "Shapefile was not tested; no Shapefile size or speed inference.",
+        "File sizes include only the direct GeoJSON and GeoParquet outputs.",
+    ],
+}
+(OUTPUT_DIR / "format-story.metrics.json").write_text(
+    json.dumps(report, indent=2, sort_keys=True, allow_nan=False) + "\n",
+    encoding="utf-8",
+)
+print("Evidence: output/format-story.metrics.json (measured in this process)")
+
