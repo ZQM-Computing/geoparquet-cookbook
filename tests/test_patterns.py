@@ -165,6 +165,28 @@ def test_performance_example_is_self_contained(tmp_path):
     output_dir = tmp_path / "output"
     assert (output_dir / "benchmark.parquet").is_file()
     assert (output_dir / "benchmark.geojson").is_file()
+    measured = output_dir / "format-story.metrics.json"
+    assert measured.is_file()
+    report = json.loads(measured.read_text(encoding="utf-8"))
+    assert report["schema_version"] == 1
+    assert report["status"] == "single_local_smoke_run_not_statistically_controlled"
+    assert report["dataset"] == "synthetic_random_points_seed_42"
+    assert report["rows"] == 10_000
+    assert report["formats"] == ["GeoParquet", "GeoJSON"]
+    assert report["roundtrip_verified"] is True
+    assert 0 < report["filtered_category_A_rows"] < 10_000
+    assert report["sizes_bytes"]["geoparquet"] == (output_dir / "benchmark.parquet").stat().st_size
+    assert report["sizes_bytes"]["geojson"] == (output_dir / "benchmark.geojson").stat().st_size
+    assert report["size_ratio_geojson_over_geoparquet"] == (
+        report["sizes_bytes"]["geojson"] / report["sizes_bytes"]["geoparquet"]
+    )
+    assert set(report["times_seconds"]) == {
+        "geoparquet_write", "geoparquet_full_read", "geoparquet_filtered_read",
+        "geojson_write", "geojson_full_read",
+    }
+    assert all(isinstance(t, (int, float)) and t >= 0 for t in report["times_seconds"].values())
+    assert "Shapefile was not tested" in " ".join(report["limitations"])
+
 
 def test_readme_optional_cog_commands_are_separate_shell_lines():
     """Optional example commands must be copy/pasteable, not literal escaped newlines."""

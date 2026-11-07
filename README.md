@@ -33,6 +33,10 @@ A practical guide and reference implementation for working with [GeoParquet](htt
 
 Built for **data engineers** and **data scientists** who need interoperable geospatial analytics. Actual storage savings and query speed depend on geometry complexity, column selection, partition layout, compression, engine versions, and workload; benchmark representative data before choosing a format or layout.
 
+## Measured format-performance stories
+
+The [evidence-first format guide](docs/measured-format-stories.md) explains how to publish GeoParquet/GeoJSON file-size and query comparisons with measured bytes, versioned synthetic fixtures, round-trip validation and clear uncertainty. Run `python examples/06-performance/run.py` to generate `output/format-story.metrics.json`. This example does **not** benchmark Shapefile or GeoPolars, nor establish universal speedups.
+
 ## Why GeoParquet?
 
 - **Columnar storage** — Read only the columns you need; skip geometry when you only need attributes.
